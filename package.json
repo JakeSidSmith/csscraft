@@ -6,7 +6,7 @@
   "scripts": {
     "build": "mkdir -p build && browserify -d -t babelify -t node-lessify src/js/index.js -o build/index.js",
     "start": "budo src/js/index.js --live -- -t babelify -t node-lessify",
-    "test": "eslint ."
+    "test": "eslint src/"
   },
   "repository": {
     "type": "git",
