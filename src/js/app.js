@@ -1,9 +1,8 @@
 import React from 'react';
+import Viewport from './viewport';
 
 const App = () => (
-  <p>
-    Hello, World!
-  </p>
+  <Viewport />
 );
 
 export default App;
