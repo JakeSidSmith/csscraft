@@ -1,0 +1,15 @@
+machine:
+  node:
+    version: 8.11.1
+
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - npm run build
+      - ./scripts/deploy

@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "jakesidsmith/browser",
+    "jakesidsmith/es6"
+  ]
+}
