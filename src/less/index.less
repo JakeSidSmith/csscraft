@@ -51,6 +51,23 @@
   width: 100px;
   height: 100px;
   backface-visibility: hidden;
+  background-position: 0 0;
+  background-size: 100% 100%;
+
+  &.front,
+  &.back,
+  &.left,
+  &.right {
+    background-image: url('images/grass_side.png');
+  }
+
+  &.top {
+    background-image: url('images/grass_top.png');
+  }
+
+  &.bottom {
+    background-image: url('images/dirt.png');
+  }
 
   &.front {
     transform: translate3d(-50px, -50px, 0) rotate3d(0, 0, 0, 0) translate3d(0, 0, 50px);
