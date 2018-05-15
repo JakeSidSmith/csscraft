@@ -2,7 +2,9 @@ import React from 'react';
 
 const Viewport = ({children}) => (
   <div className="viewport">
-    {children}
+    <div className="camera">
+      {children}
+    </div>
   </div>
 );
 

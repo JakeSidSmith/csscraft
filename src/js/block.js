@@ -5,8 +5,12 @@ const faces = ['front', 'back', 'left', 'right', 'top', 'bottom']
     <div key={value} className={`face ${value}`} />
   ));
 
-const Block = () => (
-  <div className="block">
+function translate3d (x, y, z) {
+  return `translate3d(${50 + x * 100}px, ${50 + y * 100}px, ${50 + z * 100}px)`;
+}
+
+const Block = ({x, y, z}) => (
+  <div className="block" style={{transform: translate3d(x, y, z)}}>
     {faces}
   </div>
 );

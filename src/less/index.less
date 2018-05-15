@@ -11,19 +11,30 @@
 
 .viewport {
   perspective-origin: 50% 50%;
-  perspective: 800px;
+  perspective: 500px;
   transform-style: preserve-3d;
+}
+
+.camera {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  overflow: visible;
+  transform-style: preserve-3d;
+  animation: 10s linear infinite spin;
 }
 
 .block {
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: 0;
   height: 0;
   overflow: visible;
-  top: 50%;
-  left: 50%;
   transform-style: preserve-3d;
-  animation: 2s linear infinite spin;
+  transform: translate3d(-50px, -50px, -50px);
 }
 
 .face {
@@ -32,29 +43,30 @@
   left: 0;
   width: 100px;
   height: 100px;
+  backface-visibility: hidden;
 
   &.front {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 0, 0, 0) translate3d(0, 0, -50px);
+    transform: translate3d(-50px, -50px, 0) rotate3d(0, 0, 0, 0) translate3d(0, 0, 50px);
   }
 
   &.back {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, 180deg) translate3d(0, 0, -50px);
+    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 50px);
   }
 
   &.left {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, 90deg) translate3d(0, 0, -50px);
+    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 50px);
   }
 
   &.right {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, -90deg) translate3d(0, 0, -50px);
+    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 50px);
   }
 
   &.top {
-    transform: translate3d(-50px, -50px, 0) rotate3d(1, 0, 0, -90deg) translate3d(0, 0, -50px);
+    transform: translate3d(-50px, -50px, 0) rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 50px);
   }
 
   &.bottom {
-    transform: translate3d(-50px, -50px, 0) rotate3d(1, 0, 0, 90deg) translate3d(0, 0, -50px);
+    transform: translate3d(-50px, -50px, 0) rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 50px);
   }
 }
 
@@ -76,6 +88,6 @@
   }
 
   to {
-    transform: rotate3d(1, 1, 1, 360deg);
+    transform: rotate3d(0, 1, 0, 360deg);
   }
 }
