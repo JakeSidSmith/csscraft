@@ -1,8 +1,11 @@
 import React from 'react';
 import Viewport from './viewport';
+import Block from './block';
 
 const App = () => (
-  <Viewport />
+  <Viewport>
+    <Block />
+  </Viewport>
 );
 
 export default App;
