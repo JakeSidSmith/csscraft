@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+rm -rf build
+
+mkdir -p build
+
+cp src/index.html build/index.html
+
+browserify -d -t babelify -t node-lessify src/js/index.js -o build/index.js
