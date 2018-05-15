@@ -25,7 +25,7 @@
   transform-style: preserve-3d;
 
   &.position {
-    transform: translate3d(0, 0, -200px);
+    transform: translate3d(0, 64px * 2, 0);
   }
 
   &.rotation {
@@ -41,56 +41,48 @@
   height: 0;
   overflow: visible;
   transform-style: preserve-3d;
-  transform: translate3d(-50px, -50px, -50px);
+  transform: translate3d(-32px, -32px, -32px);
 }
 
 .face {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100px;
-  height: 100px;
+  width: 64px;
+  height: 64px;
   backface-visibility: hidden;
-  background-position: 0 0;
-  background-size: 100% 100%;
+  background-position: 0 0, 0 0;
+  background-size: 100% 100%, 100%, 100%;
+  background-repeat: no-repeat, no-repeat;
 
-  &.front,
-  &.back,
-  &.left,
+  &.front {
+    transform: translate3d(-32px, -32px, 0) rotate3d(0, 0, 0, 0) translate3d(0, 0, 32px);
+    background-image: url('images/grass_side.png');
+  }
+
+  &.back {
+    transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 32px);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('images/grass_side.png');
+  }
+
+  &.left {
+    transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 32px);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/grass_side.png');
+  }
+
   &.right {
+    transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 32px);
     background-image: url('images/grass_side.png');
   }
 
   &.top {
+    transform: translate3d(-32px, -32px, 0) rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 32px);
     background-image: url('images/grass_top.png');
   }
 
   &.bottom {
-    background-image: url('images/dirt.png');
-  }
-
-  &.front {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 0, 0, 0) translate3d(0, 0, 50px);
-  }
-
-  &.back {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 50px);
-  }
-
-  &.left {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 50px);
-  }
-
-  &.right {
-    transform: translate3d(-50px, -50px, 0) rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 50px);
-  }
-
-  &.top {
-    transform: translate3d(-50px, -50px, 0) rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 50px);
-  }
-
-  &.bottom {
-    transform: translate3d(-50px, -50px, 0) rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 50px);
+    transform: translate3d(-32px, -32px, 0) rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 32px);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url('images/dirt.png');
   }
 }
 

@@ -6,7 +6,7 @@ const BLOCKS_PER_AXIS = 8;
 
 const blocks = Array(BLOCKS_PER_AXIS).fill(null).map((valueZ, z) => {
   return Array(BLOCKS_PER_AXIS).fill(null).map((valueX, x) => {
-    const y = 2 + Math.floor(Math.random() * 2);
+    const y = Math.floor(Math.random() * 2);
 
     return (
       <Block
