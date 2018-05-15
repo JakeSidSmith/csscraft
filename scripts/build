@@ -6,6 +6,6 @@ mkdir -p build
 mkdir -p build/images
 
 cp src/index.html build/index.html
-cp -r src/images/ build/images
+cp -r src/images build/images
 
 browserify -d -t babelify -t node-lessify src/js/index.js -o build/index.js
