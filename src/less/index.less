@@ -23,7 +23,14 @@
   height: 0;
   overflow: visible;
   transform-style: preserve-3d;
-  animation: 10s linear infinite spin;
+
+  &.position {
+    transform: translate3d(0, 0, -200px);
+  }
+
+  &.rotation {
+    animation: 10s linear infinite spin;
+  }
 }
 
 .block {
