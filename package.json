@@ -5,8 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "build": "./scripts/build",
-    "start": "budo src/js/index.js --dir src/ --live -- -t babelify -t node-lessify",
-    "test": "eslint src/"
+    "start": "budo src/js/index.js --dir src/ --live",
+    "test": "eslint src/ browserify-plugins/"
   },
   "repository": {
     "type": "git",
@@ -42,5 +42,11 @@
     "budo": "11.2.0",
     "eslint": "3.19.0",
     "eslint-config-jakesidsmith": "github:jakesidsmith/eslint-config-jakesidsmith#v2.2.1"
+  },
+  "browserify": {
+    "transform": [
+      "babelify",
+      "./browserify-plugins/autoprefixlessify.js"
+    ]
   }
 }
