@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "jakesidsmith/node",
+    "jakesidsmith/commonjs"
+  ]
+}
