@@ -3,5 +3,6 @@
     "jakesidsmith/browser",
     "jakesidsmith/es6",
     "jakesidsmith/react"
-  ]
+  ],
+  "parser": "babel-eslint"
 }
