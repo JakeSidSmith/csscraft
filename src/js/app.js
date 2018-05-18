@@ -10,6 +10,15 @@ class App extends React.Component {
       blocks: new Set(['0x0x0'])
     };
   }
+
+  addBlock = (x, y, z) => {
+    const {blocks} = this.state;
+
+    this.setState({
+      blocks: blocks.add(`${parseInt(x, 10)}x${parseInt(y, 10)}x${parseInt(z, 10)}`)
+    });
+  }
+
   render () {
     const {blocks} = this.state;
 
@@ -22,9 +31,10 @@ class App extends React.Component {
             return (
               <Block
                 key={key}
-                x={x}
-                y={y}
-                z={z}
+                x={parseInt(x, 10)}
+                y={parseInt(y, 10)}
+                z={parseInt(z, 10)}
+                addBlock={this.addBlock}
               />
             );
           })
