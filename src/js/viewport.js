@@ -8,12 +8,26 @@ class Viewport extends React.Component {
 
     this.state = {
       x: 45,
-      y: -45
+      y: -45,
+      distance: 0
     };
   }
 
-  pivot (x, y) {
-    return `rotateX(${y}deg) rotateY(${x}deg)`;
+  componentDidMount () {
+    window.addEventListener('wheel', this.onWheel);
+  }
+
+  transform (x, y, distance) {
+    return `translate3d(0, 0, ${distance}px) rotateX(${y}deg) rotateY(${x}deg)`;
+  }
+
+  onWheel = (event) => {
+    const {deltaY} = event;
+    const {distance} = this.state;
+
+    this.setState({
+      distance: Math.max(Math.min(distance - deltaY, 0), -1000)
+    });
   }
 
   onMouseDown = (event) => {
@@ -57,11 +71,11 @@ class Viewport extends React.Component {
 
   render () {
     const { children } = this.props;
-    const { x, y } = this.state;
+    const { x, y, distance } = this.state;
 
     return (
       <div className="viewport" onMouseDown={this.onMouseDown}>
-        <div className="camera" style={{transform: this.pivot(x, y)}}>
+        <div className="camera" style={{transform: this.transform(x, y, distance)}}>
           {children}
         </div>
       </div>
