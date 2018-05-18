@@ -55,7 +55,7 @@ class Viewport extends React.Component {
 
     const {clientX, clientY} = event;
 
-    if (this.lastMouse) {
+    if (this.lastMouse !== null) {
       const {x, y} = this.state;
 
       this.setState({
@@ -78,6 +78,14 @@ class Viewport extends React.Component {
   }
 
   onTouchStart = (event) => {
+    if (this.lastPinch === null && this.lastMouse === null) {
+      const el = document.getElementsByClassName('viewport')[0];
+      el.appendChild(document.createTextNode('Add listener'));
+
+      window.addEventListener('touchmove', this.onTouchMove);
+      window.addEventListener('touchend', this.onTouchEnd);
+    }
+
     if (event.touches && event.touches.length === 2) {
       const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
@@ -92,9 +100,6 @@ class Viewport extends React.Component {
         clientY
       };
     }
-
-    window.addEventListener('touchmove', this.onTouchMove);
-    window.addEventListener('touchend', this.onTouchEnd);
   }
 
   onTouchMove = (event) => {
@@ -103,7 +108,7 @@ class Viewport extends React.Component {
     if (event.touches) {
       const [{clientX, clientY}] = event.touches;
 
-      if (this.lastPinch && event.touches && event.touches.length === 2) {
+      if (this.lastPinch !== null && event.touches && event.touches.length === 2) {
         const {distance} = this.state;
         const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
@@ -114,7 +119,7 @@ class Viewport extends React.Component {
         });
 
         this.lastPinch = pinch;
-      } else if (this.lastMouse) {
+      } else if (this.lastMouse !== null) {
         const {x, y} = this.state;
 
         this.setState({
@@ -132,6 +137,10 @@ class Viewport extends React.Component {
 
   onTouchEnd = () => {
     this.lastPinch = null;
+    this.lastMouse = null;
+
+    const el = document.getElementsByClassName('viewport')[0];
+    el.appendChild(document.createTextNode('Remove listener'));
 
     window.removeEventListener('touchmove', this.onTouchMove);
     window.removeEventListener('touchend', this.onTouchEnd);
