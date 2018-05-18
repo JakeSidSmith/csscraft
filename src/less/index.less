@@ -17,6 +17,7 @@ body {
   perspective-origin: 50% 50%;
   perspective: 500px;
   transform-style: preserve-3d;
+  overflow: hidden;
 }
 
 .camera {
@@ -25,16 +26,14 @@ body {
   left: 50%;
   width: 0;
   height: 0;
+  /* debug */
+  width: 2px;
+  height: 2px;
+  background-color: red;
+  /* debug */
   overflow: visible;
   transform-style: preserve-3d;
-
-  &.position {
-    transform: translate3d(0, 64px * 2, 0);
-  }
-
-  &.rotation {
-    animation: 30s linear infinite spin;
-  }
+  transform: rotateX(-45deg) rotateY(-45deg);
 }
 
 .block {
@@ -67,12 +66,12 @@ body {
 
   &.back {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 32px);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('images/grass_side.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/grass_side.png');
   }
 
   &.left {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 32px);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/grass_side.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('images/grass_side.png');
   }
 
   &.right {
@@ -87,7 +86,7 @@ body {
 
   &.bottom {
     transform: translate3d(-32px, -32px, 0) rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 32px);
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url('images/dirt.png');
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('images/dirt.png');
   }
 }
 
@@ -102,13 +101,3 @@ body {
 }
 
 .create-face-colors(1);
-
-@keyframes spin {
-  from {
-    transform: rotate3d(0);
-  }
-
-  to {
-    transform: rotate3d(0, 1, 0, 360deg);
-  }
-}
