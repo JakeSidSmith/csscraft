@@ -79,7 +79,7 @@ class Viewport extends React.Component {
 
   onTouchStart = (event) => {
     if (this.lastPinch === null && this.lastMouse === null) {
-      window.addEventListener('touchmove', this.onTouchMove);
+      window.addEventListener('touchmove', this.onTouchMove, {passive: false});
       window.addEventListener('touchend', this.onTouchEnd);
     }
 
