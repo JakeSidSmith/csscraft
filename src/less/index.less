@@ -6,8 +6,11 @@
 @black-faint: rgba(0, 0, 0, 0.2);
 @black-half: rgba(0, 0, 0, 0.5);
 
+@blue-sky: #86A1C9;
+
 body {
-  background-color: #86A1C9;
+  background-color: @blue-sky;
+  cursor: crosshair;
 }
 
 .app,
@@ -24,7 +27,6 @@ body {
   perspective: 500px;
   transform-style: preserve-3d;
   overflow: hidden;
-  cursor: crosshair;
 }
 
 .camera {
