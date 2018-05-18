@@ -1,6 +1,10 @@
 @import (inline) 'node_modules/normalize.css/normalize.css';
 
 @black: #000000;
+@white: #FFFFFF;
+
+@black-faint: rgba(0, 0, 0, 0.2);
+@black-half: rgba(0, 0, 0, 0.5);
 
 body {
   background-color: #86A1C9;
@@ -47,6 +51,16 @@ body {
   overflow: visible;
   transform-style: preserve-3d;
   transform: translate3d(-32px, -32px, -32px);
+
+  &:hover {
+    .face {
+      outline: 1px solid @black-faint;
+
+      &:hover {
+        outline: 1px solid @black-half;
+      }
+    }
+  }
 }
 
 .face {
@@ -91,10 +105,6 @@ body {
 
   &.bottom::after {
     opacity: 0.8;
-  }
-
-  &:hover {
-    outline: 1px solid @black;
   }
 
   &.front {
