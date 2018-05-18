@@ -6,7 +6,7 @@ const faces = ['front', 'back', 'left', 'right', 'top', 'bottom']
   ));
 
 function translate3d (x, y, z) {
-  return `translate3d(${32 + x * 64}px, ${32 + y * 64}px, ${32 + z * 64}px)`;
+  return `translate3d(${x * 64}px, ${y * 64}px, ${z * 64}px)`;
 }
 
 const Block = ({x, y, z}) => (
