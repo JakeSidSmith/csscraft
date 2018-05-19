@@ -1,4 +1,5 @@
 import React from 'react';
+import {getDistance} from './utils';
 
 class Viewport extends React.Component {
   constructor (props) {
@@ -20,13 +21,6 @@ class Viewport extends React.Component {
 
   transform (x, y, distance) {
     return `translate3d(0, 0, ${distance}px) rotateX(${y}deg) rotateY(${x}deg)`;
-  }
-
-  distance (x1, y1, x2, y2) {
-    const dx = x1 - x2;
-    const dy = y1 - y2;
-
-    return Math.sqrt(dx * dx + dy * dy);
   }
 
   onWheel = (event) => {
@@ -79,14 +73,14 @@ class Viewport extends React.Component {
 
   onTouchStart = (event) => {
     if (this.lastPinch === null && this.lastMouse === null) {
-      window.addEventListener('touchmove', this.onTouchMove);
+      window.addEventListener('touchmove', this.onTouchMove, {passive: false});
       window.addEventListener('touchend', this.onTouchEnd);
     }
 
     if (event.touches && event.touches.length === 2) {
       const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
-      const pinch = this.distance(x1, y1, x2, y2);
+      const pinch = getDistance(x1, y1, x2, y2);
 
       this.lastPinch = pinch;
     } else {
@@ -109,7 +103,7 @@ class Viewport extends React.Component {
         const {distance} = this.state;
         const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
-        const pinch = this.distance(x1, y1, x2, y2);
+        const pinch = getDistance(x1, y1, x2, y2);
 
         this.setState({
           distance: Math.max(Math.min(distance + (pinch - this.lastPinch) * 5, 0), -1000)
@@ -140,12 +134,21 @@ class Viewport extends React.Component {
     window.removeEventListener('touchend', this.onTouchEnd);
   }
 
+  onContextMenu = (event) => {
+    event.preventDefault();
+  }
+
   render () {
     const { children } = this.props;
     const { x, y, distance } = this.state;
 
     return (
-      <div className="viewport" onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart}>
+      <div
+        className="viewport"
+        onMouseDown={this.onMouseDown}
+        onTouchStart={this.onTouchStart}
+        onContextMenu={this.onContextMenu}
+      >
         <div className="camera" style={{transform: this.transform(x, y, distance)}}>
           {children}
         </div>

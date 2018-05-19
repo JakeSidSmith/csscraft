@@ -1,10 +1,16 @@
 import React from 'react';
+import {getDistance, translate3d} from './utils';
 
-function translate3d (x, y, z) {
-  return `translate3d(${x * 64}px, ${y * 64}px, ${z * 64}px)`;
-}
+const MOVE_THRESHOLD = 5;
+const HOLD_TIME = 500;
 
-class Block extends React.PureComponent {
+class Block extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.downMouse = null;
+  }
+
   onFrontClick = () => {
     const {x, y, z, addBlock} = this.props;
     addBlock(x, y, z + 1);
@@ -35,11 +41,110 @@ class Block extends React.PureComponent {
     addBlock(x, y + 1, z);
   }
 
+  onMouseDown = (event) => {
+    const {clientX, clientY} = event;
+
+    this.downMouse = {
+      clientX,
+      clientY
+    };
+
+    this.timeout = window.setTimeout(() => {
+      const {x, y, z, removeBlock} = this.props;
+
+      removeBlock(x, y, z);
+    }, HOLD_TIME);
+
+    window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('mouseup', this.onMouseUp);
+  }
+
+  onMouseMove = (event) => {
+    const {clientX, clientY} = event;
+
+    event.preventDefault();
+
+    if (
+      this.downMouse !== null &&
+      getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
+    ) {
+      this.downMouse = null;
+      window.clearTimeout(this.timeout);
+
+      window.removeEventListener('mousemove', this.onMouseMove);
+      window.removeEventListener('mouseup', this.onMouseUp);
+    }
+  }
+
+  onMouseUp = () => {
+    this.downMouse = null;
+    window.clearTimeout(this.timeout);
+
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
+  }
+
+  onTouchStart = (event) => {
+    const [{clientX, clientY}] = event.touches;
+
+    this.downMouse = {
+      clientX,
+      clientY
+    };
+
+    if (event.touches && event.touches.length === 2) {
+      this.downMouse = null;
+      window.clearTimeout(this.timeout);
+
+      window.removeEventListener('touchmove', this.onTouchMove);
+      window.removeEventListener('touchend', this.onTouchEnd);
+    } else {
+      this.timeout = window.setTimeout(() => {
+        const {x, y, z, removeBlock} = this.props;
+
+        removeBlock(x, y, z);
+      }, HOLD_TIME);
+
+      window.addEventListener('touchmove', this.onTouchMove);
+      window.addEventListener('touchend', this.onTouchEnd);
+    }
+  }
+
+  onTouchMove = (event) => {
+    const [{clientX, clientY}] = event.touches;
+
+    event.preventDefault();
+
+    if (
+      this.downMouse !== null &&
+      getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
+    ) {
+      this.downMouse = null;
+      window.clearTimeout(this.timeout);
+
+      window.removeEventListener('touchmove', this.onTouchMove);
+      window.removeEventListener('touchend', this.onTouchEnd);
+    }
+  }
+
+  onTouchEnd = () => {
+    this.downMouse = null;
+    window.clearTimeout(this.timeout);
+
+    window.removeEventListener('touchmove', this.onTouchMove);
+    window.removeEventListener('touchend', this.onTouchEnd);
+  }
+
   render () {
     const {x, y, z} = this.props;
 
     return (
-      <div className="block" style={{transform: translate3d(x, y, z)}}>
+      <div
+        className="block"
+        style={{transform: translate3d(x, y, z)}}
+        onMouseDown={this.onMouseDown}
+        onTouchStart={this.onTouchStart}
+      >
         <div onClick={this.onFrontClick} className="face front" />
         <div onClick={this.onBackClick} className="face back" />
         <div onClick={this.onLeftClick} className="face left" />
