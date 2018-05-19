@@ -1,6 +1,7 @@
 import React from 'react';
 import Viewport from './viewport';
 import Block from './block';
+import {Grass} from './blocks';
 
 const createBlockId = (x, y, z) => `${parseInt(x, 10)}x${parseInt(y, 10)}x${parseInt(z, 10)}`;
 
@@ -46,7 +47,7 @@ class App extends React.Component {
             const [x, y, z] = key.split('x');
 
             return (
-              <Block
+              <Grass
                 key={key}
                 x={parseInt(x, 10)}
                 y={parseInt(y, 10)}

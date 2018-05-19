@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import {getDistance, translate3d} from './utils';
 
@@ -142,7 +143,7 @@ class Block extends React.Component {
 
     return (
       <div
-        className="block"
+        className={classNames('block', this.className)}
         style={{transform: translate3d(x, y, z)}}
         onMouseDown={this.onMouseDown}
         onTouchStart={this.onTouchStart}
