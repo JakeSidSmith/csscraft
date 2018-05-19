@@ -41,24 +41,42 @@ class App extends React.Component {
     const {blocks} = this.state;
 
     return (
-      <Viewport>
-        {
-          [...blocks].map((key) => {
-            const [x, y, z] = key.split('x');
+      <div>
+        <Viewport>
+          {
+            [...blocks].map((key) => {
+              const [x, y, z] = key.split('x');
 
-            return (
-              <Grass
-                key={key}
-                x={parseInt(x, 10)}
-                y={parseInt(y, 10)}
-                z={parseInt(z, 10)}
-                addBlock={this.addBlock}
-                removeBlock={this.removeBlock}
-              />
-            );
-          })
-        }
-      </Viewport>
+              return (
+                <Grass
+                  key={key}
+                  x={parseInt(x, 10)}
+                  y={parseInt(y, 10)}
+                  z={parseInt(z, 10)}
+                  addBlock={this.addBlock}
+                  removeBlock={this.removeBlock}
+                />
+              );
+            })
+          }
+        </Viewport>
+        <div className="tool-bar-container">
+          <div className="tool-bar">
+            <div className="tool">
+              <div className="tool-face" />
+            </div>
+            <div className="tool">
+              <div className="tool-face" />
+            </div>
+            <div className="tool">
+              <div className="tool-face" />
+            </div>
+            <div className="tool">
+              <div className="tool-face" />
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

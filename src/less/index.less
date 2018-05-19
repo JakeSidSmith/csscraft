@@ -8,7 +8,13 @@
 
 @blue-sky: #86A1C9;
 
-@grey: #888888;
+@grey: #AAAAAA;
+@grey-dark: #888888;
+@grey-darker: #555555;
+
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
@@ -24,6 +30,47 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.tool-bar-container {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  max-width: 800px;
+  padding: 10px;
+  padding-top: 0;
+  transform: translate(-50%, 0);
+}
+
+.tool-bar {
+  background-color: @grey;
+  border: 1px solid @grey-dark;
+  box-shadow: inset 0 0 3px 0 @black-faint;
+
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.tool {
+  position: relative;
+  float: left;
+  width: 10%;
+  height: 0;
+  padding-bottom: 10%;
+}
+
+.tool-face {
+  position: absolute;
+  width: ~'calc(100% - 10px)';
+  height: ~'calc(100% - 10px)';
+  margin: 5px;
+  background-color: @grey-darker;
+  box-shadow: inset 0 0 3px 0 @black-half;
 }
 
 .viewport {
