@@ -15,10 +15,6 @@ class Viewport extends React.Component {
     };
   }
 
-  componentDidMount () {
-    window.addEventListener('wheel', this.onWheel);
-  }
-
   transform (x, y, distance) {
     return `translate3d(0, 0, ${distance}px) rotateX(${y}deg) rotateY(${x}deg)`;
   }
@@ -77,7 +73,7 @@ class Viewport extends React.Component {
       window.addEventListener('touchend', this.onTouchEnd);
     }
 
-    if (event.touches && event.touches.length === 2) {
+    if (event.touches && event.touches.length > 1) {
       const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
       const pinch = getDistance(x1, y1, x2, y2);
@@ -99,7 +95,7 @@ class Viewport extends React.Component {
     if (event.touches) {
       const [{clientX, clientY}] = event.touches;
 
-      if (this.lastPinch !== null && event.touches && event.touches.length === 2) {
+      if (this.lastPinch !== null && event.touches && event.touches.length > 1) {
         const {distance} = this.state;
         const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
@@ -148,6 +144,7 @@ class Viewport extends React.Component {
         onMouseDown={this.onMouseDown}
         onTouchStart={this.onTouchStart}
         onContextMenu={this.onContextMenu}
+        onWheel={this.onWheel}
       >
         <div className="camera" style={{transform: this.transform(x, y, distance)}}>
           {children}

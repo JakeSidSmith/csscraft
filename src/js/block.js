@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import {getDistance, translate3d} from './utils';
 
@@ -92,7 +93,7 @@ class Block extends React.Component {
       clientY
     };
 
-    if (event.touches && event.touches.length === 2) {
+    if (event.touches && event.touches.length > 1) {
       this.downMouse = null;
       window.clearTimeout(this.timeout);
 
@@ -116,8 +117,10 @@ class Block extends React.Component {
     event.preventDefault();
 
     if (
-      this.downMouse !== null &&
-      getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
+      (
+        this.downMouse !== null &&
+        getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
+      ) || event.touches && event.touches.length > 1
     ) {
       this.downMouse = null;
       window.clearTimeout(this.timeout);
@@ -136,11 +139,11 @@ class Block extends React.Component {
   }
 
   render () {
-    const {x, y, z} = this.props;
+    const {x, y, z, className} = this.props;
 
     return (
       <div
-        className="block"
+        className={classNames('block', className)}
         style={{transform: translate3d(x, y, z)}}
         onMouseDown={this.onMouseDown}
         onTouchStart={this.onTouchStart}

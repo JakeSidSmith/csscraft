@@ -7,10 +7,22 @@
 @black-half: rgba(0, 0, 0, 0.5);
 
 @blue-sky: #86A1C9;
+@blue-sky-light: #B0D0FF;
+
+@grey-light: #CCCCCC;
+@grey: #AAAAAA;
+@grey-dark: #555555;
+
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
+  width: 100%;
+  height: 100%;
   background-color: @blue-sky;
+  background-image: linear-gradient(to bottom, @blue-sky-light, @blue-sky);
   cursor: crosshair;
   overflow: hidden;
 }
@@ -22,6 +34,63 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.tool-bar-container {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  max-width: (64px + 10px) * 10 + 20px * 2;
+  padding: 20px;
+  padding-top: 0;
+  transform: translate(-50%, 0);
+}
+
+.tool-bar {
+  background-color: @grey;
+  outline: 2px solid @black;
+  box-shadow: inset 0 0 3px 0 @black-faint;
+  white-space: nowrap;
+  line-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.tool {
+  display: inline-block;
+  width: 10%;
+  min-width: 32px + 5px * 2;
+
+  &.active {
+    background-color: @grey-light;
+    outline: 2px solid @black;
+  }
+}
+
+.tool-face {
+  width: ~'calc(100% - 10px)';
+  height: 0;
+  padding-bottom: ~'calc(100% - 10px)';
+  margin: 5px;
+  background-color: @grey-dark;
+  box-shadow: inset 0 0 3px 0 @black-half;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: inset 0 0 10px 0 @black;
+  }
 }
 
 .viewport {
@@ -70,8 +139,8 @@ body {
   width: 64px;
   height: 64px;
   backface-visibility: hidden;
-  background-position: 0 0, 0 0;
-  background-size: 100% 100%, 100%, 100%;
+  background-position: 0 0;
+  background-size: 100% 100%;
   background-repeat: no-repeat, no-repeat;
   image-rendering: pixelated;
 
@@ -83,13 +152,15 @@ body {
     width: 100%;
     height: 100%;
     background-color: @black;
+    pointer-events: none;
   }
 
-  &.top,
-  &.front {
-    &::after {
-      opacity: 0;
-    }
+  &.top::after {
+    opacity: 0;
+  }
+
+  &.front::after {
+    opacity: 0.1;
   }
 
   &.left,
@@ -100,52 +171,103 @@ body {
   }
 
   &.back::after {
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
   &.bottom::after {
-    opacity: 0.7;
+    opacity: 0.6;
   }
 
   &.front {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 0, 0, 0) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.back {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.left {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.right {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.top {
     transform: translate3d(-32px, -32px, 0) rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_top.png');
   }
 
   &.bottom {
     transform: translate3d(-32px, -32px, 0) rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 32px);
+  }
+}
+
+.grass {
+  .face,
+  .tool-face {
+    background-image: url('images/grass_side.png');
+  }
+
+  .top {
+    background-image: url('images/grass_top.png');
+  }
+
+  .bottom {
     background-image: url('images/dirt.png');
   }
 }
 
-.create-face-colors (@index) when (@index <= 6) {
-  @color: 50 + (150 / 6 * @index);
-
-  .face:nth-child(@{index}) {
-    background-color: rgb( @color, @color, @color );
+.stone {
+  .face,
+  .tool-face {
+    background-image: url('images/stone.png');
   }
-
-  .create-face-colors(@index + 1);
 }
 
-.create-face-colors(1);
+.coal {
+  .face,
+  .tool-face {
+    background-image: url('images/coal_ore.png');
+  }
+}
+
+.cobblestone {
+  .face,
+  .tool-face {
+    background-image: url('images/cobblestone.png');
+  }
+}
+
+.cobblestone-mossy {
+  .face,
+  .tool-face {
+    background-image: url('images/cobblestone_mossy.png');
+  }
+}
+
+.brick {
+  .face,
+  .tool-face {
+    background-image: url('images/brick.png');
+  }
+}
+
+.log {
+  .face,
+  .tool-face {
+    background-image: url('images/log_oak.png');
+  }
+
+  .top,
+  .bottom {
+    background-image: url('images/log_oak_top.png');
+  }
+}
+
+.leaves {
+  .face,
+  .tool-face {
+    background-image: url('images/leaves_oak.png');
+  }
+}

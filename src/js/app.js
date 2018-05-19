@@ -1,25 +1,65 @@
 import React from 'react';
 import Viewport from './viewport';
 import Block from './block';
+import ToolBar from './tool-bar';
 
 const createBlockId = (x, y, z) => `${parseInt(x, 10)}x${parseInt(y, 10)}x${parseInt(z, 10)}`;
+
+const TOOLS = [
+  {
+    className: 'grass',
+    component: Block
+  },
+  {
+    className: 'stone',
+    component: Block
+  },
+  {
+    className: 'coal',
+    component: Block
+  },
+  {
+    className: 'cobblestone',
+    component: Block
+  },
+  {
+    className: 'cobblestone-mossy',
+    component: Block
+  },
+  {
+    className: 'brick',
+    component: Block
+  },
+  {
+    className: 'log',
+    component: Block
+  },
+  {
+    className: 'leaves',
+    component: Block
+  }
+];
 
 class App extends React.Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      blocks: new Set([createBlockId(0, 0, 0)])
+      selectedTool: TOOLS[0],
+      blocks: {
+        [createBlockId(0, 0, 0)]: TOOLS[0]
+      }
     };
   }
 
   addBlock = (x, y, z) => {
-    const {blocks} = this.state;
-
-    blocks.add(createBlockId(x, y, z));
+    const {blocks, selectedTool} = this.state;
 
     this.setState({
-      blocks
+      blocks: {
+        ...blocks,
+        [createBlockId(x, y, z)]: selectedTool
+      }
     });
   }
 
@@ -28,7 +68,7 @@ class App extends React.Component {
     const blockId = createBlockId(x, y, z);
 
     if (!(x === 0 && y === 0 && z === 0)) {
-      blocks.delete(blockId);
+      delete blocks[blockId];
 
       this.setState({
         blocks
@@ -36,28 +76,52 @@ class App extends React.Component {
     }
   }
 
+  selectTool = (selectedTool) => {
+    this.setState({
+      selectedTool
+    });
+  }
+
   render () {
-    const {blocks} = this.state;
+    const {blocks, selectedTool} = this.state;
+    const blocksInfo = Object.keys(blocks).map((key) => {
+      const [x, y, z] = key.split('x');
+      const block = blocks[key];
+
+      return {
+        key,
+        x: parseInt(x, 10),
+        y: parseInt(y, 10),
+        z: parseInt(z, 10),
+        ...block
+      };
+    });
 
     return (
-      <Viewport>
-        {
-          [...blocks].map((key) => {
-            const [x, y, z] = key.split('x');
-
-            return (
-              <Block
-                key={key}
-                x={parseInt(x, 10)}
-                y={parseInt(y, 10)}
-                z={parseInt(z, 10)}
-                addBlock={this.addBlock}
-                removeBlock={this.removeBlock}
-              />
-            );
-          })
-        }
-      </Viewport>
+      <div>
+        <Viewport>
+          {
+            blocksInfo.map(({key, x, y, z, className, component: Component}) => {
+              return (
+                <Component
+                  key={key}
+                  className={className}
+                  x={parseInt(x, 10)}
+                  y={parseInt(y, 10)}
+                  z={parseInt(z, 10)}
+                  addBlock={this.addBlock}
+                  removeBlock={this.removeBlock}
+                />
+              );
+            })
+          }
+        </Viewport>
+        <ToolBar
+          selectTool={this.selectTool}
+          selectedTool={selectedTool}
+          tools={TOOLS}
+        />
+      </div>
     );
   }
 }
