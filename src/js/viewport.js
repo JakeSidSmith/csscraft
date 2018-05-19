@@ -15,10 +15,6 @@ class Viewport extends React.Component {
     };
   }
 
-  componentDidMount () {
-    window.addEventListener('wheel', this.onWheel);
-  }
-
   transform (x, y, distance) {
     return `translate3d(0, 0, ${distance}px) rotateX(${y}deg) rotateY(${x}deg)`;
   }
@@ -148,6 +144,7 @@ class Viewport extends React.Component {
         onMouseDown={this.onMouseDown}
         onTouchStart={this.onTouchStart}
         onContextMenu={this.onContextMenu}
+        onWheel={this.onWheel}
       >
         <div className="camera" style={{transform: this.transform(x, y, distance)}}>
           {children}
