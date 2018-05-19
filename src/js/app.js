@@ -2,6 +2,7 @@ import React from 'react';
 import Viewport from './viewport';
 import Block from './block';
 import {Grass} from './blocks';
+import ToolBar from './tool-bar';
 
 const createBlockId = (x, y, z) => `${parseInt(x, 10)}x${parseInt(y, 10)}x${parseInt(z, 10)}`;
 
@@ -60,22 +61,7 @@ class App extends React.Component {
             })
           }
         </Viewport>
-        <div className="tool-bar-container">
-          <div className="tool-bar">
-            <div className="tool">
-              <div className="tool-face" />
-            </div>
-            <div className="tool">
-              <div className="tool-face" />
-            </div>
-            <div className="tool">
-              <div className="tool-face" />
-            </div>
-            <div className="tool">
-              <div className="tool-face" />
-            </div>
-          </div>
-        </div>
+        <ToolBar />
       </div>
     );
   }
