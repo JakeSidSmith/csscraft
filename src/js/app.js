@@ -40,11 +40,10 @@ class App extends React.Component {
     const blockId = createBlockId(x, y, z);
 
     if (!(x === 0 && y === 0 && z === 0)) {
+      delete blocks[blockId];
+
       this.setState({
-        blocks: {
-          ...blocks,
-          [blockId]: undefined
-        }
+        blocks
       });
     }
   }
