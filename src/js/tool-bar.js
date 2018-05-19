@@ -1,21 +1,21 @@
-import classNames from 'classnames';
 import React from 'react';
+import Tool from './tool';
 
 class ToolBar extends React.Component {
   render () {
-    const {tools, selectedBlockType} = this.props;
+    const {tools, selectedTool, selectTool} = this.props;
 
     return (
       <div className="tool-bar-container">
         <div className="tool-bar">
           {
-            tools.map(({className}) => (
-              <div
-                key={className}
-                className={classNames('tool', className, selectedBlockType === className && 'active')}
-              >
-                <div className="tool-face" />
-              </div>
+            tools.map((tool) => (
+              <Tool
+                key={tool.className}
+                tool={tool}
+                selectedTool={selectedTool}
+                selectTool={selectTool}
+              />
             ))
           }
         </div>

@@ -9,6 +9,10 @@ const TOOLS = [
   {
     className: 'grass',
     component: Block
+  },
+  {
+    className: 'stone',
+    component: Block
   }
 ];
 
@@ -17,20 +21,20 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      selectedBlockType: 'grass',
+      selectedTool: TOOLS[0],
       blocks: {
-        [createBlockId(0, 0, 0)]: 'grass'
+        [createBlockId(0, 0, 0)]: TOOLS[0]
       }
     };
   }
 
   addBlock = (x, y, z) => {
-    const {blocks, selectedBlockType} = this.state;
+    const {blocks, selectedTool} = this.state;
 
     this.setState({
       blocks: {
         ...blocks,
-        [createBlockId(x, y, z)]: selectedBlockType
+        [createBlockId(x, y, z)]: selectedTool
       }
     });
   }
@@ -48,17 +52,24 @@ class App extends React.Component {
     }
   }
 
+  selectTool = (selectedTool) => {
+    this.setState({
+      selectedTool
+    });
+  }
+
   render () {
-    const {blocks, selectedBlockType} = this.state;
+    const {blocks, selectedTool} = this.state;
     const blocksInfo = Object.keys(blocks).map((key) => {
       const [x, y, z] = key.split('x');
+      const block = blocks[key];
 
       return {
         key,
         x: parseInt(x, 10),
         y: parseInt(y, 10),
         z: parseInt(z, 10),
-        className: blocks[key]
+        ...block
       };
     });
 
@@ -66,9 +77,9 @@ class App extends React.Component {
       <div>
         <Viewport>
           {
-            blocksInfo.map(({key, x, y, z, className}) => {
+            blocksInfo.map(({key, x, y, z, className, component: Component}) => {
               return (
-                <Block
+                <Component
                   key={key}
                   className={className}
                   x={parseInt(x, 10)}
@@ -81,7 +92,11 @@ class App extends React.Component {
             })
           }
         </Viewport>
-        <ToolBar selectedBlockType={selectedBlockType} tools={TOOLS} />
+        <ToolBar
+          selectTool={this.selectTool}
+          selectedTool={selectedTool}
+          tools={TOOLS}
+        />
       </div>
     );
   }
