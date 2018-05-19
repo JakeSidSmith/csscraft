@@ -89,11 +89,12 @@ body {
     pointer-events: none;
   }
 
-  &.top,
-  &.front {
-    &::after {
-      opacity: 0;
-    }
+  &.top::after {
+    opacity: 0;
+  }
+
+  &.front::after {
+    opacity: 0.1;
   }
 
   &.left,
@@ -104,11 +105,11 @@ body {
   }
 
   &.back::after {
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
   &.bottom::after {
-    opacity: 0.7;
+    opacity: 0.6;
   }
 
   &.front {
