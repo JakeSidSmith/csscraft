@@ -134,12 +134,21 @@ class Viewport extends React.Component {
     window.removeEventListener('touchend', this.onTouchEnd);
   }
 
+  onContextMenu = (event) => {
+    event.preventDefault();
+  }
+
   render () {
     const { children } = this.props;
     const { x, y, distance } = this.state;
 
     return (
-      <div className="viewport" onMouseDown={this.onMouseDown} onTouchStart={this.onTouchStart}>
+      <div
+        className="viewport"
+        onMouseDown={this.onMouseDown}
+        onTouchStart={this.onTouchStart}
+        onContextMenu={this.onContextMenu}
+      >
         <div className="camera" style={{transform: this.transform(x, y, distance)}}>
           {children}
         </div>
