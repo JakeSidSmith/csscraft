@@ -139,11 +139,11 @@ class Block extends React.Component {
   }
 
   render () {
-    const {x, y, z} = this.props;
+    const {x, y, z, className} = this.props;
 
     return (
       <div
-        className={classNames('block', this.className)}
+        className={classNames('block', className)}
         style={{transform: translate3d(x, y, z)}}
         onMouseDown={this.onMouseDown}
         onTouchStart={this.onTouchStart}

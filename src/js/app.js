@@ -1,27 +1,37 @@
 import React from 'react';
 import Viewport from './viewport';
 import Block from './block';
-import {Grass} from './blocks';
 import ToolBar from './tool-bar';
 
 const createBlockId = (x, y, z) => `${parseInt(x, 10)}x${parseInt(y, 10)}x${parseInt(z, 10)}`;
+
+const TOOLS = [
+  {
+    className: 'grass',
+    component: Block
+  }
+];
 
 class App extends React.Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      blocks: new Set([createBlockId(0, 0, 0)])
+      selectedBlockType: 'grass',
+      blocks: {
+        [createBlockId(0, 0, 0)]: 'grass'
+      }
     };
   }
 
   addBlock = (x, y, z) => {
-    const {blocks} = this.state;
-
-    blocks.add(createBlockId(x, y, z));
+    const {blocks, selectedBlockType} = this.state;
 
     this.setState({
-      blocks
+      blocks: {
+        ...blocks,
+        [createBlockId(x, y, z)]: selectedBlockType
+      }
     });
   }
 
@@ -30,27 +40,38 @@ class App extends React.Component {
     const blockId = createBlockId(x, y, z);
 
     if (!(x === 0 && y === 0 && z === 0)) {
-      blocks.delete(blockId);
-
       this.setState({
-        blocks
+        blocks: {
+          ...blocks,
+          [blockId]: undefined
+        }
       });
     }
   }
 
   render () {
-    const {blocks} = this.state;
+    const {blocks, selectedBlockType} = this.state;
+    const blocksInfo = Object.keys(blocks).map((key) => {
+      const [x, y, z] = key.split('x');
+
+      return {
+        key,
+        x: parseInt(x, 10),
+        y: parseInt(y, 10),
+        z: parseInt(z, 10),
+        className: blocks[key]
+      };
+    });
 
     return (
       <div>
         <Viewport>
           {
-            [...blocks].map((key) => {
-              const [x, y, z] = key.split('x');
-
+            blocksInfo.map(({key, x, y, z, className}) => {
               return (
-                <Grass
+                <Block
                   key={key}
+                  className={className}
                   x={parseInt(x, 10)}
                   y={parseInt(y, 10)}
                   z={parseInt(z, 10)}
@@ -61,7 +82,7 @@ class App extends React.Component {
             })
           }
         </Viewport>
-        <ToolBar />
+        <ToolBar selectedBlockType={selectedBlockType} tools={TOOLS} />
       </div>
     );
   }
