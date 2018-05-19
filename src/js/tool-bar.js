@@ -32,6 +32,9 @@ class ToolBar extends React.Component {
           <div className="tool">
             <div className="tool-face" />
           </div>
+          <div className="tool">
+            <div className="tool-face" />
+          </div>
         </div>
       </div>
     );
