@@ -113,31 +113,51 @@ body {
 
   &.front {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 0, 0, 0) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.back {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.left {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, -90deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.right {
     transform: translate3d(-32px, -32px, 0) rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_side.png');
   }
 
   &.top {
     transform: translate3d(-32px, -32px, 0) rotate3d(1, 0, 0, 90deg) translate3d(0, 0, 32px);
-    background-image: url('images/grass_top.png');
   }
 
   &.bottom {
     transform: translate3d(-32px, -32px, 0) rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 32px);
+  }
+}
+
+.grass {
+  .front {
+    background-image: url('images/grass_side.png');
+  }
+
+  .back {
+    background-image: url('images/grass_side.png');
+  }
+
+  .left {
+    background-image: url('images/grass_side.png');
+  }
+
+  .right {
+    background-image: url('images/grass_side.png');
+  }
+
+  .top {
+    background-image: url('images/grass_top.png');
+  }
+
+  .bottom {
     background-image: url('images/dirt.png');
   }
 }
