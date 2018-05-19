@@ -73,7 +73,7 @@ class Viewport extends React.Component {
       window.addEventListener('touchend', this.onTouchEnd);
     }
 
-    if (event.touches && event.touches.length === 2) {
+    if (event.touches && event.touches.length > 1) {
       const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
       const pinch = getDistance(x1, y1, x2, y2);
@@ -95,7 +95,7 @@ class Viewport extends React.Component {
     if (event.touches) {
       const [{clientX, clientY}] = event.touches;
 
-      if (this.lastPinch !== null && event.touches && event.touches.length === 2) {
+      if (this.lastPinch !== null && event.touches && event.touches.length > 1) {
         const {distance} = this.state;
         const [{clientX: x1, clientY: y1}, {clientX: x2, clientY: y2}] = event.touches;
 
