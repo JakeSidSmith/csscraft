@@ -2,6 +2,7 @@ import React from 'react';
 import {getDistance, translate3d} from './utils';
 
 const MOVE_THRESHOLD = 5;
+const HOLD_TIME = 500;
 
 class Block extends React.Component {
   constructor (props) {
@@ -40,12 +41,19 @@ class Block extends React.Component {
     addBlock(x, y + 1, z);
   }
 
-  onMouseDown = () => {
+  onMouseDown = (event) => {
+    const {clientX, clientY} = event;
+
+    this.downMouse = {
+      clientX,
+      clientY
+    };
+
     this.timeout = window.setTimeout(() => {
       const {x, y, z, removeBlock} = this.props;
 
       removeBlock(x, y, z);
-    }, 500);
+    }, HOLD_TIME);
 
     window.addEventListener('mousemove', this.onMouseMove);
     window.addEventListener('mouseup', this.onMouseUp);
@@ -54,20 +62,77 @@ class Block extends React.Component {
   onMouseMove = (event) => {
     const {clientX, clientY} = event;
 
+    event.preventDefault();
+
     if (
       this.downMouse !== null &&
       getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
     ) {
+      this.downMouse = null;
       window.clearTimeout(this.timeout);
+
       window.removeEventListener('mousemove', this.onMouseMove);
       window.removeEventListener('mouseup', this.onMouseUp);
     }
   }
 
   onMouseUp = () => {
+    this.downMouse = null;
     window.clearTimeout(this.timeout);
+
     window.removeEventListener('mousemove', this.onMouseMove);
     window.removeEventListener('mouseup', this.onMouseUp);
+  }
+
+  onTouchStart = (event) => {
+    const [{clientX, clientY}] = event.touches;
+
+    this.downMouse = {
+      clientX,
+      clientY
+    };
+
+    if (event.touches && event.touches.length === 2) {
+      this.downMouse = null;
+      window.clearTimeout(this.timeout);
+
+      window.removeEventListener('touchmove', this.onTouchMove);
+      window.removeEventListener('touchend', this.onTouchEnd);
+    } else {
+      this.timeout = window.setTimeout(() => {
+        const {x, y, z, removeBlock} = this.props;
+
+        removeBlock(x, y, z);
+      }, HOLD_TIME);
+
+      window.addEventListener('touchmove', this.onTouchMove);
+      window.addEventListener('touchend', this.onTouchEnd);
+    }
+  }
+
+  onTouchMove = (event) => {
+    const [{clientX, clientY}] = event.touches;
+
+    event.preventDefault();
+
+    if (
+      this.downMouse !== null &&
+      getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
+    ) {
+      this.downMouse = null;
+      window.clearTimeout(this.timeout);
+
+      window.removeEventListener('touchmove', this.onTouchMove);
+      window.removeEventListener('touchend', this.onTouchEnd);
+    }
+  }
+
+  onTouchEnd = () => {
+    this.downMouse = null;
+    window.clearTimeout(this.timeout);
+
+    window.removeEventListener('touchmove', this.onTouchMove);
+    window.removeEventListener('touchend', this.onTouchEnd);
   }
 
   render () {
@@ -78,6 +143,7 @@ class Block extends React.Component {
         className="block"
         style={{transform: translate3d(x, y, z)}}
         onMouseDown={this.onMouseDown}
+        onTouchStart={this.onTouchStart}
       >
         <div onClick={this.onFrontClick} className="face front" />
         <div onClick={this.onBackClick} className="face back" />
