@@ -143,7 +143,6 @@ body {
   background-size: 100% 100%;
   background-repeat: no-repeat, no-repeat;
   image-rendering: pixelated;
-  background-color: @grey;
 
   &::after {
     content: '';
@@ -205,10 +204,8 @@ body {
 }
 
 .grass {
-  .face {
-    background-image: url('images/grass_side.png');
-    background-image: url('images/grass_side.png');
-    background-image: url('images/grass_side.png');
+  .face,
+  .tool-face {
     background-image: url('images/grass_side.png');
   }
 
@@ -219,8 +216,58 @@ body {
   .bottom {
     background-image: url('images/dirt.png');
   }
+}
 
+.stone {
+  .face,
   .tool-face {
-    background-image: url('images/grass_side.png');
+    background-image: url('images/stone.png');
+  }
+}
+
+.coal {
+  .face,
+  .tool-face {
+    background-image: url('images/coal_ore.png');
+  }
+}
+
+.cobblestone {
+  .face,
+  .tool-face {
+    background-image: url('images/cobblestone.png');
+  }
+}
+
+.cobblestone-mossy {
+  .face,
+  .tool-face {
+    background-image: url('images/cobblestone_mossy.png');
+  }
+}
+
+.brick {
+  .face,
+  .tool-face {
+    background-image: url('images/brick.png');
+  }
+}
+
+.log {
+  .face,
+  .tool-face {
+    background-image: url('images/log_oak.png');
+  }
+
+  .top,
+  .bottom {
+    background-image: url('images/log_oak_top.png');
+  }
+}
+
+.leaves {
+  .face,
+  .tool-face {
+    background-image: url('images/leaves_oak.png');
   }
 }

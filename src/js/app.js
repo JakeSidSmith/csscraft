@@ -13,6 +13,30 @@ const TOOLS = [
   {
     className: 'stone',
     component: Block
+  },
+  {
+    className: 'coal',
+    component: Block
+  },
+  {
+    className: 'cobblestone',
+    component: Block
+  },
+  {
+    className: 'cobblestone-mossy',
+    component: Block
+  },
+  {
+    className: 'brick',
+    component: Block
+  },
+  {
+    className: 'log',
+    component: Block
+  },
+  {
+    className: 'leaves',
+    component: Block
   }
 ];
 
