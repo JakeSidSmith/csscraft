@@ -7,6 +7,7 @@
 @black-half: rgba(0, 0, 0, 0.5);
 
 @blue-sky: #86A1C9;
+@blue-sky-light: #B0D0FF;
 
 @grey: #AAAAAA;
 @grey-dark: #555555;
@@ -17,7 +18,10 @@
 
 html,
 body {
+  width: 100%;
+  height: 100%;
   background-color: @blue-sky;
+  background-image: linear-gradient(to bottom, @blue-sky-light, @blue-sky);
   cursor: crosshair;
   overflow: hidden;
 }
