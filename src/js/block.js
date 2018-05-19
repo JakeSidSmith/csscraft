@@ -92,7 +92,7 @@ class Block extends React.Component {
       clientY
     };
 
-    if (event.touches && event.touches.length === 2) {
+    if (event.touches && event.touches.length > 1) {
       this.downMouse = null;
       window.clearTimeout(this.timeout);
 
@@ -116,8 +116,10 @@ class Block extends React.Component {
     event.preventDefault();
 
     if (
-      this.downMouse !== null &&
-      getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
+      (
+        this.downMouse !== null &&
+        getDistance(clientX, clientY, this.downMouse.clientX, this.downMouse.clientY) > MOVE_THRESHOLD
+      ) || event.touches && event.touches.length > 1
     ) {
       this.downMouse = null;
       window.clearTimeout(this.timeout);
