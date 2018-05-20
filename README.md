@@ -25,3 +25,15 @@ The final CSSCraft just renders a single block, and allows the user to build wha
 4. Click / press and drag to rotate the screen
 
 5. Scroll / pinch to zoom
+
+## Contributing
+
+1. Fork the repo
+
+2. Run `npm install` to install dependencies
+
+3. Run `npm start` to run a development server with live reloading
+
+4. Do something awesome
+
+5. Open a pull request
