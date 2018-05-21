@@ -27,14 +27,9 @@ body {
   cursor: crosshair;
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 p,
 li {
   margin: 10px auto;
@@ -46,7 +41,8 @@ h3,
 h4,
 h5,
 h6 {
-  padding-top: 10px;
+  margin: 20px auto;
+  padding-top: 20px;
   border-top: 1px solid @grey-lighter;
 
   &:first-child {
@@ -57,6 +53,11 @@ h6 {
 
 h1 {
   text-align: center;
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 18px;
 }
 
 .app,
@@ -125,23 +126,37 @@ h1 {
   }
 }
 
-.info {
+.info-wrapper {
+  width: 0;
+  height: 0;
+  overflow: visible;
+}
+
+.info-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: @black-faint;
+  overflow: visible;
+  background-color: @black-half;
   overflow: auto;
-  transition: 0.2s ease-in-out background-color;
+}
 
-  &.open {
-    box-shadow: 0 2px 5px 0 @black-half;
-
-    .modal-table {
-      opacity: 1;
-    }
-  }
+.info-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  text-align: center;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: @white;
+  box-shadow: 0 1px 3px 0 @black-faint;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .modal-table {
@@ -149,7 +164,6 @@ h1 {
   height: 100%;
   display: table;
   table-layout: fixed;
-  transition: 0.2s ease-in-out opacity;
 }
 
 .modal-cell {
@@ -161,9 +175,16 @@ h1 {
 .modal {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 20px;
   border-radius: 4px;
   background-color: @white;
+
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
 }
 
 .viewport {
@@ -343,4 +364,33 @@ h1 {
   .tool-face {
     background-image: url('images/leaves_oak.png');
   }
+}
+
+.fade-appear,
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-appear-active {
+  opacity: 0.99;
+  transition: ease-in-out 200ms opacity;
+}
+
+.fade-enter-done,
+.fade-appear-done {
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 0.99;
+}
+
+.fade-exit-active {
+  opacity: 0.01;
+  transition: ease-in-out 200ms opacity;
+}
+
+.fade-exit-done {
+  opacity: 0;
 }
