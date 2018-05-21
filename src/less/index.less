@@ -9,6 +9,7 @@
 @blue-sky: #86A1C9;
 @blue-sky-light: #B0D0FF;
 
+@grey-lighter: #EEEEEE;
 @grey-light: #CCCCCC;
 @grey: #AAAAAA;
 @grey-dark: #555555;
@@ -25,6 +26,37 @@ body {
   background-image: linear-gradient(to bottom, @blue-sky-light, @blue-sky);
   cursor: crosshair;
   overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li {
+  margin: 10px auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding-top: 10px;
+  border-top: 1px solid @grey-lighter;
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+h1 {
+  text-align: center;
 }
 
 .app,
@@ -91,6 +123,47 @@ body {
   &:hover {
     box-shadow: inset 0 0 10px 0 @black;
   }
+}
+
+.info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: @black-faint;
+  overflow: auto;
+  transition: 0.2s ease-in-out background-color;
+
+  &.open {
+    box-shadow: 0 2px 5px 0 @black-half;
+
+    .modal-table {
+      opacity: 1;
+    }
+  }
+}
+
+.modal-table {
+  width: 100%;
+  height: 100%;
+  display: table;
+  table-layout: fixed;
+  transition: 0.2s ease-in-out opacity;
+}
+
+.modal-cell {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.modal {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: @white;
 }
 
 .viewport {
