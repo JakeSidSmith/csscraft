@@ -2,6 +2,7 @@ import React from 'react';
 import Viewport from './viewport';
 import Block from './block';
 import ToolBar from './tool-bar';
+import Info from './info';
 
 const createBlockId = (x, y, z) => `${parseInt(x, 10)}x${parseInt(y, 10)}x${parseInt(z, 10)}`;
 
@@ -121,6 +122,7 @@ class App extends React.Component {
           selectedTool={selectedTool}
           tools={TOOLS}
         />
+        <Info />
       </div>
     );
   }
